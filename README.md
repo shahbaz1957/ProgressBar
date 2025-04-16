@@ -1,12 +1,59 @@
-# React + Vite
+#  Animated Progress Bar (React + Tailwind CSS)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project demonstrates a smooth, animated progress bar built using **React** and styled with **Tailwind CSS**. The progress bar visually transitions when the progress value changes, and includes accessibility features like `aria` roles.
 
-Currently, two official plugins are available:
+##  Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-  **Animated Progress**: Smooth transition using `ease-in-out`.
+-  **Accessible**: Uses `role="progressbar"` and appropriate ARIA attributes.
+-  **React Hooks**: Utilizes `useState` and `useEffect` for dynamic rendering.
+-  **Tailwind CSS**: Fast styling with utility classes.
 
-## Expanding the ESLint configuration
+## 📷 Preview
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+![Progress Bar Demo](./src/assets/Progessbar.png) <!-- Add your screenshot path -->
+
+##  Technologies Used
+
+- React (Functional Components)
+- Tailwind CSS
+- JavaScript (ES6+)
+
+---
+
+##  How It Works
+
+```jsx
+import React, { useEffect, useState } from "react";
+
+function ProgressBar({ progress }) {
+  const [animatedProgress, setAnimatedProgress] = useState(0);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAnimatedProgress(progress);
+    }, 1000);
+  }, [progress]);
+
+  return (
+    <div className="flex justify-center mt-[20px]">
+      <div className="border-2 border-[#141313] w-[500px] rounded-2xl overflow-hidden">
+        <div
+          className="bg-green-600 text-white transition-all duration-1000 ease-in-out text-right"
+          style={{
+            transform: `translateX(${animatedProgress - 100}%)`,
+            color: animatedProgress < 10 ? "black" : "white",
+          }}
+          role="progressbar"
+          aria-valuemax={100}
+          aria-valuemin={0}
+          aria-valuenow={progress}
+        >
+          {progress}%
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default ProgressBar;
